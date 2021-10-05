@@ -10,20 +10,31 @@ import json
 # Indicates whether the data from CSV is inserted into MongoDB
 is_db_created = False
 
-# Function to connect service to local MongoDB
-def init_connection():
+
+def init_connection()->MongoClient:
+    """[Function to connect service to local MongoDB]
+
+    Returns:
+        MongoClient: [Instance of pymongo]
+    """
     client = MongoClient(username='admin',password='admin@123')
     return client
 
-# Function to create collecion and database
 def init_db(client,db_name="greendeck",coll_name="customer"):
+    """[Function to create collecion and database]
+
+    Returns:
+        db -> Instance of created database
+        coll -> Instance of created collection
+    """
     # client = MongoClient(url,port)
     db = client[db_name]
     coll = db[coll_name]
     return db,coll
 
-# Function to insert data from CSV to MongoDB
 def mongo_import(csv:str,db_name:str,coll_name:str,client:MongoClient):
+    """[Function to insert data from CSV to MongoDB]
+    """
     db = client[db_name]
     coll = db[coll_name]
     data = pd.read_csv(csv,encoding = "ISO-8859-1")
