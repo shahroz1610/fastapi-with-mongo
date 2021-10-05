@@ -4,14 +4,14 @@ from createDB import init_connection, init_db, mongo_import
 import json
 from bson.json_util import dumps
 
-csv_path = '/home/shahroz/Documents/assignment/Greendeck SE Assignment Task 1.csv'
+csv_path = '/Greendeck SE Assignment Task 1.csv'
 
 # Initialising the connection with MongoDB
 client = init_connection()
-db, coll = init_db(client)
+db, db_collection = init_db(client)
 
-if coll.count()==0:
-    mongo_import(csv_path,db.name,coll.name,client)
+if db_collection.count()==0:
+    mongo_import(csv_path,db.name,db_collection.name,client)
 
 # Creating the FastAPI instance
 app = FastAPI()
@@ -28,7 +28,7 @@ async def add_data(item:Item) -> dict:
     """
     try:
         # Insert into DB
-        ret = coll.insert_one(item.dict())
+        ret = db_collection.insert_one(item.dict())
         res = {
             'status' : 201,
             'message': 'Successfully added',
@@ -55,7 +55,7 @@ async def get_data(name:str) -> dict:
     """
     try:
         # Mongo query to find the data
-        data = json.loads(dumps(coll.find({"name":name})))
+        data = json.loads(dumps(db_collection.find({"name":name})))
         print(data)
         # Check if data is not found.j
         if len(data) == 0:
@@ -109,7 +109,7 @@ async def update_data(data:UpdateSchema) -> dict:
     try:
         # Update the record
         # To update all of the matching results, change *update_one* method to *update_many*
-        ret = coll.update_one(query,new_values)
+        ret = db_collection.update_one(query,new_values)
 
         # Check if the result is updated
         if ret.raw_result['updatedExisting'] == True:
@@ -146,7 +146,7 @@ async def delete_data(query:Delete) -> dict:
     try:
         # If the record exists, it will be deleted
         # Only one document will be removed, to remove all change *delete_one* => *delete_many*
-        coll.delete_one(query.dict())
+        db_collection.delete_one(query.dict())
         res = {
             'status' : 200,
             'message' : 'Successfully removed',

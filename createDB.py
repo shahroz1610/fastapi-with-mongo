@@ -11,7 +11,7 @@ def init_connection()->MongoClient:
     client = MongoClient(username='admin',password='admin@123')
     return client
 
-def init_db(client,db_name="greendeck",coll_name="customer"):
+def init_db(client,db_name="greendeck",collection_name="customer"):
     """[Function to create collecion and database]
 
     Returns:
@@ -19,16 +19,16 @@ def init_db(client,db_name="greendeck",coll_name="customer"):
         coll -> Instance of created collection
     """
     db = client[db_name]
-    coll = db[coll_name]
-    return db,coll
+    db_collection = db[collection_name]
+    return db,db_collection
 
-def mongo_import(csv:str,db_name:str,coll_name:str,client:MongoClient):
+def mongo_import(csv:str,db_name:str,collection_name:str,client:MongoClient):
     """[Function to insert data from CSV to MongoDB]
     """
     db = client[db_name]
-    coll = db[coll_name]
+    db_collection = db[collection_name]
     data = pd.read_csv(csv,encoding = "ISO-8859-1")
     payload = json.loads(data.to_json(orient='records'))
-    coll.remove()
-    coll.insert(payload)
+    db_collection.remove()
+    db_collection.insert(payload)
     return True
