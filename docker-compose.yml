@@ -11,7 +11,5 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=admin@123
   web :
     build : .
-    volumes :
-      - .:/code
     ports :
       - "8000:8000"
