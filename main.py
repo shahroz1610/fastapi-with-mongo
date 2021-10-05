@@ -17,6 +17,9 @@ if not is_db_created:
     mongo_import(csv_path,db.name,coll.name,client)
     is_db_created = True
 
+# if coll.find().count() == 0:
+#     mongo_import(csv_path,db.name,coll.name,client)
+
 # Creating the FastAPI instance
 app = FastAPI()
 
