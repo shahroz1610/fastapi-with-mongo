@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from models import Item,UpdateSchema, Delete
-from createDB import init_connection, init_db, mongo_import, is_db_created
+from createDB import init_connection, init_db, mongo_import
 import json
 from bson.json_util import dumps
 
@@ -10,12 +10,8 @@ csv_path = '/home/shahroz/Documents/assignment/Greendeck SE Assignment Task 1.cs
 client = init_connection()
 db, coll = init_db(client)
 
-# Inserting data into mongoDB from csv
-is_db_created = True #set this to false to insert data into MongoDB
-
-if not is_db_created:
+if coll.count()==0:
     mongo_import(csv_path,db.name,coll.name,client)
-    is_db_created = True
 
 # Creating the FastAPI instance
 app = FastAPI()
