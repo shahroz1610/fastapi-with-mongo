@@ -27,7 +27,6 @@ def init_db(client,db_name="greendeck",coll_name="customer"):
         db -> Instance of created database
         coll -> Instance of created collection
     """
-    # client = MongoClient(url,port)
     db = client[db_name]
     coll = db[coll_name]
     return db,coll
