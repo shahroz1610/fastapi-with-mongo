@@ -1,15 +1,6 @@
 import pandas as pd
 from pymongo import MongoClient
 import json
-# import os
-
-# MONGO_USER = os.environ['MONGO_ROOT_USER']
-# MONGO_PASSWORD = os.environ['MONGO_ROOT_PASSWORD']
-# print(MONGO_USER,MONGO_PASSWORD)
-
-# Indicates whether the data from CSV is inserted into MongoDB
-is_db_created = False
-
 
 def init_connection()->MongoClient:
     """[Function to connect service to local MongoDB]
