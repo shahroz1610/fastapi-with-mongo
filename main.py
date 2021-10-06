@@ -154,11 +154,12 @@ async def delete_data(query:Delete) -> dict:
     try:
         # If the record exists, it will be deleted
         # Only one document will be removed, to remove all change *delete_one* => *delete_many*
-        coll.delete_one(d)
+        ret = coll.delete_one(d)
+        print(ret.raw_result)
         res = {
             'status' : 200,
-            'message' : 'Successfully removed',
-            'data' : query.dict()
+            'message' : 'Successfully removed' if ret.raw_result['n']==1 else 'No entry found',
+            'data' : query.dict() if ret.raw_result['n']==1 else 'None'
         }
     except Exception as e:
         # Return error if any

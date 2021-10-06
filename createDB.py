@@ -8,7 +8,7 @@ def init_connection()->MongoClient:
     Returns:
         MongoClient: [Instance of pymongo]
     """
-    client = MongoClient('db',27017,username='admin',password='admin@123')
+    client = MongoClient('localhost',27017,username='admin',password='admin@123')
     return client
 
 def init_db(client,db_name="greendeck",collection_name="customer"):
