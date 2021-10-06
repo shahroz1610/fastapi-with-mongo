@@ -8,7 +8,7 @@ def init_connection()->MongoClient:
     Returns:
         MongoClient: [Instance of pymongo]
     """
-    client = MongoClient('127.0.0.1',27017,username='admin',password='admin@123')
+    client = MongoClient('db',27017,username='admin',password='admin@123')
     return client
 
 def init_db(client,db_name="greendeck",collection_name="customer"):
@@ -29,6 +29,6 @@ def mongo_import(csv:str,db_name:str,collection_name:str,client:MongoClient):
     db_collection = db[collection_name]
     data = pd.read_csv(csv,encoding = "ISO-8859-1")
     payload = json.loads(data.to_json(orient='records'))
-    db_collection.remove()
+    # db_collection.remove()
     db_collection.insert(payload)
     return True

@@ -1,8 +1,10 @@
+from re import X
 from fastapi import FastAPI
 from models import Item,UpdateSchema, Delete
 from createDB import init_connection, init_db, mongo_import
 import json
 from bson.json_util import dumps
+import os
 
 csv_path = './Greendeck SE Assignment Task 1.csv'
 
@@ -11,14 +13,10 @@ client = init_connection()
 db, coll = init_db(client)
 
 # Inserting data into mongoDB from csv
-is_db_created = True #set this to false to insert data into MongoDB
+is_db_created = False #set this to false to insert data into MongoDB
 
 if not is_db_created:
     mongo_import(csv_path,db.name,coll.name,client)
-    is_db_created = True
-
-# if coll.find().count() == 0:
-#     mongo_import(csv_path,db.name,coll.name,client)
 
 # Creating the FastAPI instance
 app = FastAPI()
@@ -150,6 +148,8 @@ async def delete_data(query:Delete) -> dict:
     Returns:
         dict: [Result of the query]
     """
+    d = {}
+    d[query.dict()["key"]] = query.dict()["value"]
     try:
         # If the record exists, it will be deleted
         # Only one document will be removed, to remove all change *delete_one* => *delete_many*
