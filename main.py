@@ -150,10 +150,11 @@ async def delete_data(query:Delete) -> dict:
     """
     d = {}
     d[query.dict()["key"]] = query.dict()["value"]
+    print(d)
     try:
         # If the record exists, it will be deleted
         # Only one document will be removed, to remove all change *delete_one* => *delete_many*
-        coll.delete_one(query.dict())
+        coll.delete_one(d)
         res = {
             'status' : 200,
             'message' : 'Successfully removed',
