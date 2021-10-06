@@ -61,7 +61,6 @@ async def get_data(name:str) -> dict:
     try:
         # Mongo query to find the data
         data = json.loads(dumps(coll.find({"name":name})))
-        print(data)
         # Check if data is not found.j
         if len(data) == 0:
             response = {
@@ -150,12 +149,10 @@ async def delete_data(query:Delete) -> dict:
     """
     d = {}
     d[query.dict()["key"]] = query.dict()["value"]
-    print(d)
     try:
         # If the record exists, it will be deleted
         # Only one document will be removed, to remove all change *delete_one* => *delete_many*
         ret = coll.delete_one(d)
-        print(ret.raw_result)
         res = {
             'status' : 200,
             'message' : 'Successfully removed' if ret.raw_result['n']==1 else 'No entry found',
