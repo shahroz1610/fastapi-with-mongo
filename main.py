@@ -140,10 +140,10 @@ async def update_data(data:UpdateSchema) -> dict:
 
 @app.delete('/delete-data')
 async def delete_data(query:Delete) -> dict:
-    """[Delete method to remove the document of the query passed]
+    """[Delete method to remove one document of the query passed]
 
     Args:
-        query (Delete): [Function will remove the document based on the query]
+        query (Delete): [Function will remove one document based on the query]
 
     Returns:
         dict: [Result of the query]
