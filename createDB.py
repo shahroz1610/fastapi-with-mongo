@@ -13,7 +13,7 @@ def init_connection()->MongoClient:
         MongoClient: [Instance of pymongo]
     """
     host = os.getenv('host')
-    port = os.getenv('port')
+    port = int(os.getenv('port'))
     username = os.getenv('username')
     password = os.getenv('password')
     client = MongoClient(host,port,username=username,password=password)
