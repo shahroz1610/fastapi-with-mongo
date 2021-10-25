@@ -1,6 +1,10 @@
 import pandas as pd
 from pymongo import MongoClient
 import json
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def init_connection()->MongoClient:
     """[Function to connect service to local MongoDB]
@@ -8,7 +12,11 @@ def init_connection()->MongoClient:
     Returns:
         MongoClient: [Instance of pymongo]
     """
-    client = MongoClient('db',27017,username='admin',password='admin@123')
+    host = os.getenv('host')
+    port = os.getenv('port')
+    username = os.getenv('username')
+    password = os.getenv('password')
+    client = MongoClient(host,port,username=username,password=password)
     return client
 
 def init_db(client,db_name="greendeck",collection_name="customer"):
