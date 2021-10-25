@@ -6,7 +6,7 @@ import json
 from bson.json_util import dumps
 import os
 
-csv_path = './Greendeck SE Assignment Task 1.csv'
+csv_path = './data.csv'
 
 # Initialising the connection with MongoDB
 client = init_connection()
